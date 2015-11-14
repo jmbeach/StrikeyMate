@@ -9,7 +9,16 @@
 
     <string-array name="nav_bar_list_items">
         <item>Home</item>
-        <item>Profile</item>
+        <item>Profile/Login</item>
         <item>Settings</item>
     </string-array>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="strRegister"><u>Register</u></string>
+
+    <string name="title_activity_register">Register</string>
 </resources>

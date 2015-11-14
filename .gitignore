@@ -5,3 +5,7 @@
 .DS_Store
 /build
 /captures
+/Backend/bower_components
+/Backend/node_modules
+/Backend/config/default.json
+/Backend/.git/

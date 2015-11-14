@@ -12,4 +12,6 @@
     <color name="secondary_text_material_dark">#3b3b3b</color>
     <color name="windowBackground">#0091ea</color>
     <color name="selectedPage">#ff685e</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
