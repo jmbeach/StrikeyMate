@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import none.strikeymatetemp.R;
 
@@ -36,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
     private View mContentView;
     private View mControlsView;
     private boolean mVisible;
+    private Button btnRegister;
+    private String strUrlCreateUser = "http://localhost:2738/createuser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        btnRegister = (Button)findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // grab e-mail
+                // grab username
+                // grab password
+                // post the email,username,and password to the backend to request user creation
+
+            }
+        });
     }
 
     @Override
@@ -162,5 +182,20 @@ public class RegisterActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+    private void requestUserCreation(String username, String email, String password) throws IOException {
+        URL url = null;
+        try {
+            url = new URL(strUrlCreateUser);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        String urlParams = "username="+username+"&email="+email+"&password="+password;
+        connection.setDoInput(true);
+        DataOutputStream rwStream = new DataOutputStream(connection.getOutputStream());
+        rwStream.writeBytes(urlParams);
     }
 }
