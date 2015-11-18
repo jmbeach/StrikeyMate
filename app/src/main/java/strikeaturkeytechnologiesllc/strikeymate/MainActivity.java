@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
             startActivity(intent);
         }
 

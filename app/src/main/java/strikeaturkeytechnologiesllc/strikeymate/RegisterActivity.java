@@ -8,9 +8,12 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -70,10 +73,17 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // grab e-mail
+                EditText tbEmail = (EditText) findViewById(R.id.tbRegisterEmail);
                 // grab username
+                EditText tbUsername = (EditText) findViewById(R.id.tbRegisterUsername);
                 // grab password
+                EditText tbPassword = (EditText) findViewById(R.id.tbRegisterPassword);
                 // post the email,username,and password to the backend to request user creation
-
+                try {
+                    requestUserCreation(tbUsername.getText().toString(), tbEmail.getText().toString(), tbPassword.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -197,5 +207,16 @@ public class RegisterActivity extends AppCompatActivity {
         connection.setDoInput(true);
         DataOutputStream rwStream = new DataOutputStream(connection.getOutputStream());
         rwStream.writeBytes(urlParams);
+        rwStream.flush();
+        rwStream.close();
+        int responseCode = connection.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        System.out.println(response);
     }
 }
