@@ -6,13 +6,5 @@
         android:fragment="strikeaturkeytechnologiesllc.strikeymate.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" android:icon="@drawable/ic_info_black_24dp" />
 
-    <header
-        android:fragment="strikeaturkeytechnologiesllc.strikeymate.SettingsActivity$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp" />
-
-    <header
-        android:fragment="strikeaturkeytechnologiesllc.strikeymate.SettingsActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" android:icon="@drawable/ic_sync_black_24dp" />
 
 </preference-headers>
