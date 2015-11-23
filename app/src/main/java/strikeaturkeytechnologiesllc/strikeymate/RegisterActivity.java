@@ -10,12 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import net.sf.corn.httpclient.HttpForm;
+import net.sf.corn.httpclient.HttpResponse;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import none.strikeymatetemp.R;
@@ -68,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        btnRegister = (Button)findViewById(R.id.btnRegister);
+        btnRegister = (Button)findViewById(R.id.btnRegisterSubmit);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,29 +199,19 @@ public class RegisterActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
     private void requestUserCreation(String username, String email, String password) throws IOException {
-        URL url = null;
+        URI url = null;
         try {
-            url = new URL(strUrlCreateUser);
-        } catch (MalformedURLException e) {
+            url = new URI(strUrlCreateUser);
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-        String urlParams = "username="+username+"&email="+email+"&password="+password;
-        connection.setDoInput(true);
-        DataOutputStream rwStream = new DataOutputStream(connection.getOutputStream());
-        rwStream.writeBytes(urlParams);
-        rwStream.flush();
-        rwStream.close();
-        int responseCode = connection.getResponseCode();
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        HttpForm form = new HttpForm(url);
+        form.putFieldValue("username",username);
+        HttpResponse res = form.doPost();
+        if (res.hasError()) {
+            //TODO:handle error
         }
-        in.close();
-        System.out.println(response);
+        String data = res.getData();
+        System.out.println(data);
     }
 }
