@@ -1,6 +1,7 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.sf.corn.httpclient.HttpForm;
+import net.sf.corn.httpclient.HttpResponse;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import none.strikeymatetemp.R;
 
@@ -21,6 +30,7 @@ import none.strikeymatetemp.R;
  * status bar and navigation/system bar) with user interaction.
  */
 public class LoginActivity extends AppCompatActivity {
+    private String strUrlLogin;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -43,14 +53,16 @@ public class LoginActivity extends AppCompatActivity {
     private View mControlsView;
     private Button btnRegister;
     private Button btnSkip;
+    private Button btnLogin;
     private EditText tbLoginUsername;
+    private EditText tbLoginPassword;
     private boolean mVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
+        strUrlLogin = getResources().getString(R.string.backend_url) + "login";        setContentView(R.layout.activity_login);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -83,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        tbLoginPassword = (EditText) findViewById(R.id.tbLoginPassword);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +112,14 @@ public class LoginActivity extends AppCompatActivity {
                 // Pull up main activity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+        btnLogin=(Button)findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                requestLogin(tbLoginUsername.getText().toString(),tbLoginPassword.getText().toString());
             }
         });
     }
@@ -207,5 +228,54 @@ public class LoginActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    private void requestLogin(String username, String pass) {
+        URI url = null;
+        try {
+            url = new URI(strUrlLogin);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        HttpForm form = new HttpForm(url);
+        form.putFieldValue("identity",username);
+        form.putFieldValue("pass",pass);
+        class RunnableLogin implements Runnable {
+            HttpForm form;
+            Context context;
+            String data;
+            public RunnableLogin(HttpForm _form, Context c) {
+                form = _form;
+                context = c;
+            }
+            @Override
+            public void run() {
+                HttpResponse res = null;
+                try {
+                    res = form.doPost();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (res.hasError()) {
+                    //TODO:handle error
+                }
+                String data = res.getData();
+                System.out.println(data);
+                this.data = data;
+            }
+        }
+        RunnableLogin task;
+        task = new RunnableLogin(form,getApplicationContext());
+        Thread t = new Thread(task);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CharSequence text = task.data;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+        toast.show();
     }
 }

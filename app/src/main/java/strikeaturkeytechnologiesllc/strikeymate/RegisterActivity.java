@@ -1,6 +1,7 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import net.sf.corn.httpclient.HttpForm;
 import net.sf.corn.httpclient.HttpResponse;
@@ -52,11 +54,12 @@ public class RegisterActivity extends AppCompatActivity {
     private View mControlsView;
     private boolean mVisible;
     private Button btnRegister;
-    private String strUrlCreateUser = "http://localhost:2738/createuser";
+    private String strUrlCreateUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        strUrlCreateUser= getResources().getString(R.string.backend_url)+"createuser";
 
         setContentView(R.layout.activity_register);
 
@@ -207,11 +210,42 @@ public class RegisterActivity extends AppCompatActivity {
         }
         HttpForm form = new HttpForm(url);
         form.putFieldValue("username",username);
-        HttpResponse res = form.doPost();
-        if (res.hasError()) {
-            //TODO:handle error
+        form.putFieldValue("email",email);
+        form.putFieldValue("pass",password);
+        class DoRegister implements Runnable {
+            HttpForm form;
+            String data;
+            DoRegister(HttpForm _form) {
+                form = _form;
+            }
+            @Override
+            public void run() {
+                HttpResponse res = null;
+                try {
+                    res = form.doPost();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (res.hasError()) {
+                    //TODO:handle error
+                }
+                String data = res.getData();
+                this.data = data;
+            }
         }
-        String data = res.getData();
-        System.out.println(data);
+        DoRegister task = new DoRegister(form);
+        Thread t = new Thread(task);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CharSequence text = task.data;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+        toast.show();
+
+
     }
 }
