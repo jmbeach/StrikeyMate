@@ -327,6 +327,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(prefName,id);
+        editor.commit();
     }
     private static boolean isUuid(String uuid) {
         try {
