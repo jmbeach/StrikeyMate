@@ -41,6 +41,11 @@
             android:label="@string/title_activity_game_session"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name="strikeaturkeytechnologiesllc.strikeymate.SpareTipActivity"
+            android:label="@string/title_activity_spare_tip"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
