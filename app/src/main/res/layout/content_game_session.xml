@@ -10,6 +10,7 @@
     tools:showIn="@layout/activity_game_session"
     tools:context="strikeaturkeytechnologiesllc.strikeymate.GameSessionActivity">
 
+
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -35,5 +36,14 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/helpButton" />
+    <TextView
+        android:id="@+id/lblGameCode"
+        style="@style/Text.H2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Code: "
+        android:layout_above="@+id/simScoreButton"
+        android:layout_alignRight="@+id/simScoreButton"
+        android:layout_alignEnd="@+id/simScoreButton" />
 
 </RelativeLayout>

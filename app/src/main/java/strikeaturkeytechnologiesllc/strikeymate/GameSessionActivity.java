@@ -50,6 +50,7 @@ public class GameSessionActivity extends AppCompatActivity
     ScoreAdapter scoreAdapter;
     String[] playerNames;
     GameSession currentSession;
+    TextView lblGameCode;
     int frameNum = -1;
     int turn;
 
@@ -62,6 +63,9 @@ public class GameSessionActivity extends AppCompatActivity
         // get current game session
         currentSession = currentGameSession();
         System.out.println(currentSession.gameCode);
+
+        lblGameCode = (TextView) findViewById(R.id.lblGameCode);
+        lblGameCode.setText("Code\n: "+currentSession.gameCode);
         turn = 0;
         scoreView = (ExpandableListView) findViewById(R.id.gameSessionView);
         playerNames = new String[]{"John","Alex","Susan"};
