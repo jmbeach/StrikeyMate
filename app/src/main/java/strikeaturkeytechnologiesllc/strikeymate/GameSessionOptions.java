@@ -5,4 +5,6 @@ package strikeaturkeytechnologiesllc.strikeymate;
  */
 public class GameSessionOptions {
     public boolean allowFlagPlayers;
+    public int gameSize;
+
 }

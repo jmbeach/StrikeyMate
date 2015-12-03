@@ -29,7 +29,7 @@
 
 </android.support.design.widget.CoordinatorLayout>
 
-<!-- This is the header inside the drawer-->
+<!-- This is the header inside the drawer -->
 <android.support.design.widget.NavigationView
     android:id="@+id/gsnav_view"
     android:layout_width="wrap_content"

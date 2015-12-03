@@ -23,8 +23,8 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Another Button"
-        android:id="@+id/anotherButton"
+        android:text="Simulate score"
+        android:id="@+id/simScoreButton"
         android:layout_below="@+id/gameSessionView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
