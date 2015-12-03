@@ -287,6 +287,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         // if login successful
         if (task.data.equals(getResources().getString(R.string.server_message_success))) {
+            // Save the id of the logged in user
             // redirect user to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);

@@ -9,7 +9,7 @@
 
     <string name="pref_logged_in_user">logged_in_user</string>
 
-    <string name="backend_url">http://10.0.2.2:2738/</string>
+    <string name="backend_url">http://strikeymatebackend.herokuapp.com/</string>
     <string name="server_message_success">OK</string>
     <string-array name="nav_bar_list_items">
         <item>Home</item>
