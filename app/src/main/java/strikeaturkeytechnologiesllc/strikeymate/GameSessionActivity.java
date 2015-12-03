@@ -15,8 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Random;
 
 import none.strikeymatetemp.R;
 
@@ -26,6 +30,8 @@ public class GameSessionActivity extends AppCompatActivity
     private ListView lvNavBar;
     NavigationView navigationView;
     DrawerLayout drawer;
+    int randNum;
+    Random randObj = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,32 @@ public class GameSessionActivity extends AppCompatActivity
                 selectItemFromDrawer(position);
             }
         });
+
+
+        Button simScoreButton = (Button) findViewById(R.id.simScoreButton);
+        simScoreButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                randNum = randObj.nextInt(10);
+
+                //TODO: Everything having to do with Game sessions. RIP Jared's brain
+            }
+        });
+
+        Button reqHelpButton = (Button) findViewById(R.id.helpButton);
+        reqHelpButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                CharSequence text = "An employee has been notified";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                toast.show();
+
+            }
+        });
+
 
 
     }

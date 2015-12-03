@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -29,24 +30,24 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/csnav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main">
-
-        <ListView
-            android:id="@+id/csNavBar"
-            android:layout_width="match_parent"
-            android:layout_marginTop="160dp"
+        <android.support.design.widget.NavigationView
+            android:id="@+id/csnav_view"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="#fff"
-            android:choiceMode="singleChoice"
-            android:divider="@color/offBlack"
-            android:dividerHeight="0dp" />
-    </android.support.design.widget.NavigationView>
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main">
+
+            <ListView
+                android:id="@+id/csNavBar"
+                android:layout_width="match_parent"
+                android:layout_marginTop="160dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:choiceMode="singleChoice"
+                android:divider="@color/offBlack"
+                android:dividerHeight="0dp" />
+        </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,14 +1,17 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
+import android.app.AlertDialog;
 import android.app.LauncherActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.InputType;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +24,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +51,8 @@ public class MainActivity extends AppCompatActivity
     private static final String strEventOnFlagPlayerUpdate = "flag-player-update";
     private static final String strEventOnScoreUpdate = "on-score-update";
     //endregion
+
+    private String gameID = "";
 
     //region PUBLIC_ATTRIBUTES
     //endregion
@@ -101,13 +110,104 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final View checkBoxView = View.inflate(this, R.layout.checkbox, null);
+        final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                // Save to shared preferences
+            }
+        });
+        checkBox.setText("Enable Flaggable Scores?");
+        checkBoxView.setBackgroundColor(Color.red(255));
         Button createGame = (Button) findViewById(R.id.btnCreateGame);
         createGame.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent gameSessionIntent = new Intent(MainActivity.this, GameSessionActivity.class);
-                startActivity(gameSessionIntent);
+                //pop up text field
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Enter Game Size");
+
+// Set up the input
+                final EditText input = new EditText(MainActivity.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                //builder.setView(input);
+                LinearLayout ll=new LinearLayout(MainActivity.this);
+                ll.removeAllViews();
+                ll.setOrientation(LinearLayout.VERTICAL);
+                ll.addView(input);
+                ll.addView(checkBoxView);
+                builder.setView(ll);
+
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String text = input.getText().toString();
+                        try {
+                            int gameSize = Integer.parseInt(text);
+                            if (gameSize>0 && gameSize <=8 ) {
+                                System.out.println("Game Size = " + gameSize);
+                                System.out.println("Flaggable Scores: " + checkBox.isChecked());
+                                Intent GSIntent = new Intent(MainActivity.this,GameSessionActivity.class);
+                                startActivity(GSIntent);
+                            }
+                        } catch (NumberFormatException e){
+                            System.out.println(text+" is not a number");
+                            Intent MainIntent = new Intent(MainActivity.this,MainActivity.class);
+                            startActivity(MainIntent);
+                        }
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        Intent MainIntent = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(MainIntent);
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
+        Button joinGame = (Button) findViewById(R.id.btnJoinGame);
+        joinGame.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //pop up text field
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Enter Unique Game Session ID");
+
+// Set up the input
+                final EditText input = new EditText(MainActivity.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        gameID = input.getText().toString();
+                        System.out.println("Game Session ID = "+gameID);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
@@ -158,12 +258,7 @@ public class MainActivity extends AppCompatActivity
                 //startActivity(loginIntent);
                 break;
             case 2:
-                // logout
                 System.out.println(navItems[position]+" was pressed in NavBar");
-                String prefGroup = getResources().getString(R.string.pref_group_main);
-                String prefName = getResources().getString(R.string.pref_logged_in_user);
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
-                pref.edit().remove(prefName).commit();
                 Intent logoutIntent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(logoutIntent);
                 break;
