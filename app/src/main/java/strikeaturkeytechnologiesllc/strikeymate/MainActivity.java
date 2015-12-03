@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -99,6 +100,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Button createGame = (Button) findViewById(R.id.btnCreateGame);
+        createGame.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent gameSessionIntent = new Intent(MainActivity.this,GameSessionActivity.class);
+                startActivity(gameSessionIntent);
+            }
+        });
+
 
         //region DRAWER_SETUP
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -135,15 +146,20 @@ public class MainActivity extends AppCompatActivity
         String [] navItems = getResources().getStringArray(R.array.nav_bar_list_items);
         switch(position){
             case 0:
-                System.out.println(navItems[position] + " was pressed in NavBar");
+                System.out.println(navItems[position] + " was pressed in NavBar. Closing Drawers");
 //                Intent mainIntent = new Intent(MainActivity.this,MainActivity.class);
 //                startActivity(mainIntent);
                 drawer.closeDrawers();
                 break;
             case 1:
                 System.out.println(navItems[position]+" was pressed in NavBar");
-                Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(loginIntent);
+                //Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
+                //startActivity(loginIntent);
+                break;
+            case 2:
+                System.out.println(navItems[position]+" was pressed in NavBar");
+                Intent logoutIntent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(logoutIntent);
                 break;
             default:
                 break;
