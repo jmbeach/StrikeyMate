@@ -58,5 +58,10 @@ public class Player {
     public void flagScore(Player player, Frame frame) {
         throw new UnsupportedOperationException();
     }
+
+
+    public Frame getFrame(int frameNum) {
+        return frames.get(frameNum);
+    }
     //endregion
 }

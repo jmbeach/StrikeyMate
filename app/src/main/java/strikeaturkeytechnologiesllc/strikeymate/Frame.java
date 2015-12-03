@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public class Frame {
     //region PUBLIC_ATTRIBUTES
-    public Leave firstAttempt;
-    public Leave secondAttempt;
+    public Leave firstLeave;
+    public Leave secondLeave;
     public ArrayList<Leave> additionalAttempts;
     public int frameNumber;
     //endregion
@@ -20,6 +20,10 @@ public class Frame {
      * @return
      */
     public boolean isStrike() {
+        //if (firstLeave.getPinCount() == 0) {
+        //  return true;
+        //}
+        //return false;
         throw new UnsupportedOperationException();
     }
 
@@ -28,6 +32,10 @@ public class Frame {
      * @return
      */
     public boolean isSpare() {
+        //if (secondLeave.getPinCount() == 0) {
+        //  return true;
+        //}
+        //return false;
         throw new UnsupportedOperationException();
     }
 
