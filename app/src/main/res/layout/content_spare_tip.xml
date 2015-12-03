@@ -18,7 +18,8 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/radioButton5"
         android:layout_toEndOf="@+id/radioButton5"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -27,7 +28,8 @@
         android:id="@+id/radioButton2"
         android:layout_alignTop="@+id/radioButton"
         android:layout_toLeftOf="@+id/radioButton5"
-        android:layout_toStartOf="@+id/radioButton5" />
+        android:layout_toStartOf="@+id/radioButton5"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -36,7 +38,8 @@
         android:id="@+id/radioButton3"
         android:layout_alignTop="@+id/radioButton2"
         android:layout_toLeftOf="@+id/radioButton6"
-        android:layout_toStartOf="@+id/radioButton6" />
+        android:layout_toStartOf="@+id/radioButton6"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -45,7 +48,8 @@
         android:id="@+id/radioButton4"
         android:layout_alignTop="@+id/radioButton3"
         android:layout_toLeftOf="@+id/radioButton7"
-        android:layout_toStartOf="@+id/radioButton7" />
+        android:layout_toStartOf="@+id/radioButton7"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -54,7 +58,8 @@
         android:id="@+id/radioButton5"
         android:layout_above="@+id/radioButton8"
         android:layout_toRightOf="@+id/radioButton8"
-        android:layout_toEndOf="@+id/radioButton8" />
+        android:layout_toEndOf="@+id/radioButton8"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -64,7 +69,8 @@
         android:layout_marginTop="30dp"
         android:layout_below="@+id/radioButton3"
         android:layout_toRightOf="@+id/radioButton9"
-        android:layout_toEndOf="@+id/radioButton9" />
+        android:layout_toEndOf="@+id/radioButton9"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -73,7 +79,8 @@
         android:id="@+id/radioButton7"
         android:layout_alignTop="@+id/radioButton6"
         android:layout_toLeftOf="@+id/radioButton9"
-        android:layout_toStartOf="@+id/radioButton9" />
+        android:layout_toStartOf="@+id/radioButton9"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -83,7 +90,8 @@
         android:layout_marginTop="30dp"
         android:layout_below="@+id/radioButton6"
         android:layout_toRightOf="@+id/radioButton6"
-        android:layout_toEndOf="@+id/radioButton6" />
+        android:layout_toEndOf="@+id/radioButton6"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -92,7 +100,8 @@
         android:id="@+id/radioButton9"
         android:layout_alignTop="@+id/radioButton8"
         android:layout_toLeftOf="@+id/radioButton10"
-        android:layout_toStartOf="@+id/radioButton10" />
+        android:layout_toStartOf="@+id/radioButton10"
+        android:allowUndo="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -109,6 +118,7 @@
         android:text="Get tip"
         android:id="@+id/getTipButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="111dp" />
+        android:layout_marginBottom="111dp"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
