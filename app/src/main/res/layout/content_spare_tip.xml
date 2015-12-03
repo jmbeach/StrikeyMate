@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_spare_tip"
     tools:context="strikeaturkeytechnologiesllc.strikeymate.SpareTipActivity">
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10"
@@ -21,7 +21,7 @@
         android:layout_marginTop="40dp"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="9"
@@ -31,7 +31,7 @@
         android:layout_toStartOf="@+id/radioButton5"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="8"
@@ -41,7 +41,7 @@
         android:layout_toStartOf="@+id/radioButton6"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="7"
@@ -51,7 +51,7 @@
         android:layout_toStartOf="@+id/radioButton7"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="6"
@@ -61,7 +61,7 @@
         android:layout_toEndOf="@+id/radioButton8"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="5"
@@ -72,7 +72,7 @@
         android:layout_toEndOf="@+id/radioButton9"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4"
@@ -82,7 +82,7 @@
         android:layout_toStartOf="@+id/radioButton9"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3"
@@ -93,7 +93,7 @@
         android:layout_toEndOf="@+id/radioButton6"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2"
@@ -103,7 +103,7 @@
         android:layout_toStartOf="@+id/radioButton10"
         android:allowUndo="true" />
 
-    <RadioButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
