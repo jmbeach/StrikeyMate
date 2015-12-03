@@ -2,6 +2,7 @@ package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import none.strikeymatetemp.R;
 
@@ -47,6 +49,7 @@ public class GameSessionActivity extends AppCompatActivity
     ExpandableListView scoreView;
     ScoreAdapter scoreAdapter;
     String[] playerNames;
+    GameSession currentSession;
     int frameNum = 0;
     int turn;
 
@@ -56,7 +59,9 @@ public class GameSessionActivity extends AppCompatActivity
         setContentView(R.layout.activity_game_session);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        // get current game session
+        currentSession = currentGameSession();
+        System.out.println(currentSession.gameCode);
         turn = 0;
         scoreView = (ExpandableListView) findViewById(R.id.gameSessionView);
         playerNames = new String[]{"John","Alex","Susan"};
@@ -113,7 +118,7 @@ public class GameSessionActivity extends AppCompatActivity
                         toast.show();
                     } else {
                         frameScore = firstBowl + secondBowl;
-                        CharSequence text = "You gscored "+frameScore;
+                        CharSequence text = "You scored "+frameScore;
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(getApplicationContext(),text,duration);
                         toast.show();
@@ -153,6 +158,28 @@ public class GameSessionActivity extends AppCompatActivity
 
 
 
+    }
+
+    private GameSession currentGameSession() {
+        String prefGroup = getResources().getString(R.string.pref_group_main);
+        String prefName = getResources().getString(R.string.pref_current_game_session);
+        SharedPreferences pref = getSharedPreferences(prefGroup, 0);
+        String strPref = pref.getString(prefName,null);
+        // if the preference hasn't been set
+        if (strPref == null) {
+            // return null
+            return null;
+        }
+        // otherwise try to make an id with what is stored
+        int id;
+        try {
+            id = Integer.parseInt(strPref);
+        } catch(Exception e) {
+            // if not successful return null
+            return null;
+        }
+        // otherwise return uuid
+        return GameSession.ById(id);
     }
 
     private void selectItemFromDrawer(int position) {
@@ -278,4 +305,5 @@ class ScoreAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
     }
+
 }
