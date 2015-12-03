@@ -1,6 +1,7 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // If user session already exists
-        if (loggedInUser() != null) {
+        if (loggedInUser(getApplicationContext()) != null) {
             // go straight to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -248,10 +249,12 @@ public class LoginActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), text, duration);
         toast.show();
     }
-    private UUID loggedInUser() {
-        String prefGroup = getResources().getString(R.string.pref_group_main);
-        String prefName = getResources().getString(R.string.pref_logged_in_user);
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup, 0);
+
+
+    public static UUID loggedInUser(Context context) {
+        String prefGroup = context.getResources().getString(R.string.pref_group_main);
+        String prefName = context.getResources().getString(R.string.pref_logged_in_user);
+        SharedPreferences pref = context.getSharedPreferences(prefGroup, 0);
         String strPref = pref.getString(prefName,null);
         // if the preference hasn't been set
         if (strPref == null) {

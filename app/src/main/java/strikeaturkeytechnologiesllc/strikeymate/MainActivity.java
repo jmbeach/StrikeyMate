@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.LauncherActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -39,6 +40,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.w3c.dom.Text;
 
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 import none.strikeymatetemp.R;
 
@@ -52,7 +54,6 @@ public class MainActivity extends AppCompatActivity
     private static final String strEventOnScoreUpdate = "on-score-update";
     //endregion
 
-    private String gameID = "";
 
     //region PUBLIC_ATTRIBUTES
     //endregion
@@ -65,8 +66,11 @@ public class MainActivity extends AppCompatActivity
     }
     private GameSession activeSession;
     private ListView lvNavBar;
+    private TextView lblUserName;
     NavigationView navigationView;
     DrawerLayout drawer;
+    private String gameID = "";
+    private UserAccount loggedInUser;
     //endregion
 
     //region PUBLIC_METHODS
@@ -109,7 +113,16 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        lblUserName = (TextView)findViewById(R.id.lblMainUserName);
 
+        // Check if user logged in
+        UUID loggedInUserId = LoginActivity.loggedInUser(getApplicationContext());
+        if (loggedInUserId != null) {
+            // retrieve and store their account data
+            loggedInUser = UserAccount.getUserAccountByID(loggedInUserId);
+            // set the greeting to their username
+            lblUserName.setText(loggedInUser.username);
+        }
         final View checkBoxView = View.inflate(this, R.layout.checkbox, null);
         final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -136,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 //builder.setView(input);
-                LinearLayout ll=new LinearLayout(MainActivity.this);
+                LinearLayout ll = new LinearLayout(MainActivity.this);
                 ll.removeAllViews();
                 ll.setOrientation(LinearLayout.VERTICAL);
                 ll.addView(input);
@@ -150,15 +163,15 @@ public class MainActivity extends AppCompatActivity
                         String text = input.getText().toString();
                         try {
                             int gameSize = Integer.parseInt(text);
-                            if (gameSize>0 && gameSize <=8 ) {
+                            if (gameSize > 0 && gameSize <= 8) {
                                 System.out.println("Game Size = " + gameSize);
                                 System.out.println("Flaggable Scores: " + checkBox.isChecked());
-                                Intent GSIntent = new Intent(MainActivity.this,GameSessionActivity.class);
+                                Intent GSIntent = new Intent(MainActivity.this, GameSessionActivity.class);
                                 startActivity(GSIntent);
                             }
-                        } catch (NumberFormatException e){
-                            System.out.println(text+" is not a number");
-                            Intent MainIntent = new Intent(MainActivity.this,MainActivity.class);
+                        } catch (NumberFormatException e) {
+                            System.out.println(text + " is not a number");
+                            Intent MainIntent = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(MainIntent);
                         }
 
@@ -168,7 +181,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        Intent MainIntent = new Intent(MainActivity.this,MainActivity.class);
+                        Intent MainIntent = new Intent(MainActivity.this, MainActivity.class);
                         startActivity(MainIntent);
                     }
                 });
@@ -258,7 +271,13 @@ public class MainActivity extends AppCompatActivity
                 //startActivity(loginIntent);
                 break;
             case 2:
-                System.out.println(navItems[position]+" was pressed in NavBar");
+                // if they press logout
+                System.out.println(navItems[position] + " was pressed in NavBar");
+
+                // log the user out
+                logout();
+
+                // redirect to login screen
                 Intent logoutIntent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(logoutIntent);
                 break;
@@ -335,8 +354,15 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void call(Object... args) {
             throw new UnsupportedOperationException();
+
         }
     };
+    private void logout() {
+        String prefGroup = getResources().getString(R.string.pref_group_main);
+        String prefName = getResources().getString(R.string.pref_logged_in_user);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
+        pref.edit().remove(prefName).commit();
+    }
 
     //endregion
 
