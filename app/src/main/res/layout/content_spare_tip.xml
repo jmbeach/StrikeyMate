@@ -119,32 +119,24 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         android:text="Get tip"
-        android:id="@+id/getTipButton"
+        android:id="@+id/tipButton"
         android:layout_marginBottom="49dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/gotTipButton"
-        android:layout_alignStart="@+id/gotTipButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:text="Got it!"
-        android:id="@+id/gotTipButton"
-        android:layout_alignTop="@+id/getTipButton"
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/textBox"
-        android:layout_above="@+id/getTipButton"
+        android:layout_above="@+id/tipButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

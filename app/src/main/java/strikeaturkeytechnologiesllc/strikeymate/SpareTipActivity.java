@@ -31,7 +31,7 @@ public class SpareTipActivity extends AppCompatActivity
     private ListView lvNavBar;
     NavigationView navigationView;
     DrawerLayout drawer;
-    boolean[] pins = new boolean[10];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,9 @@ public class SpareTipActivity extends AppCompatActivity
         toggle.syncState();
 
 
-        lvNavBar = (ListView)findViewById(R.id.csNavBar);
+        lvNavBar = (ListView) findViewById(R.id.csNavBar);
         String[] navBarListItems = getResources().getStringArray(R.array.game_nav_items);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.drawer_list_item,navBarListItems);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, navBarListItems);
         lvNavBar.setAdapter(adapter);
         navigationView = (NavigationView) findViewById(R.id.csnav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -60,107 +60,118 @@ public class SpareTipActivity extends AppCompatActivity
             }
         });
 
-        final TextView textBox = (TextView) findViewById(R.id.textBox);
-        final Button gotTipButton = (Button) findViewById(R.id.gotTipButton);
-        final Button getTipButton = (Button) findViewById(R.id.getTipButton);
 
-        gotTipButton.setOnClickListener(new View.OnClickListener() {
+        final TextView textBox = (TextView) findViewById(R.id.textBox);
+        final Button tipButton = (Button) findViewById(R.id.tipButton);
+
+
+        tipButton.setOnClickListener(new View.OnClickListener() {
+            int buttonCount = 1;
 
             @Override
             public void onClick(View v) {
-
-                gotTipButton.setVisibility(View.GONE);
-
 
                 //reset things for the getTip view
-                String sugg = "";
-                getTipButton.setVisibility(View.VISIBLE);
-                textBox.setText(sugg);
+                if (buttonCount == 0) {
+                    buttonCount = 1;
+                    String sugg = "";
+                    textBox.setText(sugg);
+                    tipButton.setText("Get tip");
+                } else {
+                    buttonCount = 0;
 
-            }});
+                    //get the current pin setup from the checkboxes
+                    int pinCount = 0;
+                    boolean[] pins = new boolean[10];
+                    for(int i = 0; i < 10; i++) {
+                        pins[i] = false;
+                    }
 
+                    CheckBox cb = (CheckBox) findViewById(R.id.radioButton);
+                    if (cb.isChecked()) {
+                        pins[9] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton2);
+                    if (cb.isChecked()) {
+                        pins[8] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton3);
+                    if (cb.isChecked()) {
+                        pins[7] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton4);
+                    if (cb.isChecked()) {
+                        pins[6] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton5);
+                    if (cb.isChecked()) {
+                        pins[5] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton6);
+                    if (cb.isChecked()) {
+                        pins[4] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton7);
+                    if (cb.isChecked()) {
+                        pins[3] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton8);
+                    if (cb.isChecked()) {
+                        pins[2] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton9);
+                    if (cb.isChecked()) {
+                        pins[1] = true;
+                        pinCount++;
+                    }
+                    cb = (CheckBox) findViewById(R.id.radioButton10);
+                    if (cb.isChecked()) {
+                        pins[0] = true;
+                        pinCount++;
+                    }
 
+                    int headPin = getHeadPin(pins);
 
-//        Button getTipButton = (Button) findViewById(R.id.getTipButton);
-//
-//
-//        Button gotTipButton = (Button) findViewById(R.id.gotTipButton);
+                    String sugg = "Gee, this one is tough!";
+                    if (pinCount == 10) {
+                        //return strike sugg
+                        sugg = "Righties: Throw the ball between the 1 and 3 pins\nLefties: Throw the ball between the 1 and 2 pins";
+                    } else if (pinCount == 1) {
+                        //return single pin sugg
+                        sugg = "Stick it to the pin!";
+                    }else if (pinCount == 0) {
+                        sugg = "There aren't any pins there to hit!";
+                    }
+                    else if (pinCount == 2 && (pins[6] && pins[9])) {
+                        //return 7-10 sugg
+                        sugg = "Hit the 7 on the left side or the 10 on the right side and hope for the best either way";
+                    } else if (pinCount == 4 && (pins[0] && pins[1] && pins[3] && pins[6])) {
+                        //return left4 sugg
+                        sugg = "Righties: Hit the left side of all of them\nLefties: Throw the ball between the 1 and 2 pins";
+                    } else if (pinCount == 4 && (pins[0] && pins[2] && pins[5] && pins[9])) {
+                        //return right4 sugg
+                        sugg = "Righties: Throw the ball between the 1 and 3 pins\nLefties: Hit the right side of all of them";
+                    } else if (pinCount == 4 && (pins[3] && pins[5] && pins[6] && pins[9])) {
+                        //return 4-7 6-10 split sugg
+                        sugg = "Righties: Hit the 6 on the far right and 10 right after\nLefties: Hit the 4 on the far left and the 7 right after";
+                    } else if (pinCount == 3 && (pins[4] && pins[6] && pins[9])) {
+                        //return trident sugg
+                        sugg = "I've got nothing. How did you even do that?!";
+                    }
 
-        getTipButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                getTipButton.setVisibility(View.GONE);
-
-
-                //get the current pin setup from the checkboxes - DONE
-                int pinCount = 0;
-                CheckBox cb = (CheckBox) findViewById(R.id.radioButton);
-                if (cb.isChecked()) { pins[0] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton2);
-                if (cb.isChecked()){ pins[1] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton3);
-                if (cb.isChecked()){ pins[2] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton4);
-                if (cb.isChecked()){ pins[3] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton5);
-                if (cb.isChecked()){ pins[4] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton6);
-                if (cb.isChecked()){ pins[5] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton7);
-                if (cb.isChecked()){ pins[6] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton8);
-                if (cb.isChecked()){ pins[7] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton9);
-                if (cb.isChecked()){ pins[8] = true; pinCount++;}
-                cb = (CheckBox) findViewById(R.id.radioButton10);
-                if (cb.isChecked()){ pins[9] = true; pinCount++;}
-
-
-                //get the current pin setup from the checkboxes
-                //pass those to the Leave class (or wherever it ends up) generateTip method
-                //      will that be server side?
-                int headPin = getHeadPin(pins);
-                String sugg = "Gee, this one is tough!";
-                if (pinCount == 10) {
-                    //return strike sugg
-                    sugg = "Righties: Throw the ball between the 1 and 3 pins\nLefties: Throw the ball between the 1 and 2 pins";
+                    textBox.setText(sugg);
+                    tipButton.setText("Got it!");
                 }
-                else if (pinCount == 1) {
-                    //return single pin sugg
-                    sugg = "Stick it to the pin!";
-                }
-                else if (pinCount == 2 && (pins[6] && pins[9])) {
-                    //return 7-10 sugg
-                    sugg = "Hit the 7 on the left side or the 10 on the right side and hope for the best either way";
-                }
-                else if (pinCount == 4 && (pins[0] && pins[1] && pins[3] && pins[6])) {
-                    //return left4 sugg
-                    sugg = "Righties: Hit the left side of all of them\nLefties: Throw the ball between the 1 and 2 pins";
-                }
-                else if (pinCount == 4 && (pins[0] && pins[2] && pins[5] && pins[9])) {
-                    //return right4 sugg
-                    sugg = "Righties: Throw the ball between the 1 and 3 pins\nLefties: Hit the right side of all of them";
-                }
-                else if (pinCount == 4 && (pins[3] && pins[5] && pins[6] && pins[9])) {
-                    //return 4-7 6-10 split sugg
-                    sugg = "Righties: Hit the 6 on the far right and 10 right after\nLefties: Hit the 4 on the far left and the 7 right after";
-                }
-                else if (pinCount == 3 && (pins[4] && pins[6] && pins[9])) {
-                    //return trident sugg
-                    sugg = "I've got nothing. How did you even do that?!";
-                }
-
-                gotTipButton.setVisibility(View.VISIBLE);
-                textBox.setText(sugg);
-
-
-                //I need to figure out how to paint an arrow on the screen in response to the result
-
             }
         });
-
     }
 
     private int getHeadPin(boolean[] standingPins) {
@@ -172,6 +183,8 @@ public class SpareTipActivity extends AppCompatActivity
 
         return -1;
     }
+
+
 
     private void selectItemFromDrawer(int position) {
         String [] navItems = getResources().getStringArray(R.array.game_nav_items);
