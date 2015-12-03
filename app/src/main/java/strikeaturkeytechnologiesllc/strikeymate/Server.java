@@ -1,22 +1,20 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import net.sf.corn.httpclient.HttpForm;
 import net.sf.corn.httpclient.HttpResponse;
 
-import org.json.JSONObject;
-
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.UUID;
 
 /**
@@ -24,38 +22,30 @@ import java.util.UUID;
  */
 public class Server {
     public static String strUrl = "http://strikeymatebackend.herokuapp.com/";
-//    public static String strUrl = "http://192.168.1.5:2738/";
+//    public static String strUrl = "http://10.0.2.2:2738/";
 
-    private static String getServerData(HttpForm inputForm) {
+    private static String getServerData(URL url) {
         class RunnableGet implements Runnable {
             String data;
-            HttpForm form;
-            public RunnableGet(HttpForm _form) {
-                form = _form;
+            URL url;
+
+            public RunnableGet(URL url) {
+                this.url = url;
             }
             @Override
             public void run() {
-                HttpResponse res = null;
                 try {
-                    res = form.doGet();
+                    HttpRequest req = HttpRequest.get(url);
+                    data = req.body();
                 }
-                catch (IOException e) {
+                catch(HttpRequest.HttpRequestException e) {
                     e.printStackTrace();
                 }
-                if (res == null) {
-                    data = "Couldn't communicate with server";
-                    return;
-                }
-                else if (res.hasError()) {
-                    throw new RuntimeException("Server error");
-                }
-                String data = res.getData();
                 System.out.println(data);
-                this.data = data;
             }
         }
         RunnableGet task;
-        task = new RunnableGet(inputForm);
+        task = new RunnableGet(url);
         Thread t = new Thread(task);
         t.start();
         try {
@@ -122,18 +112,17 @@ public class Server {
     }
 
     public static JsonObject getUserDataById(UUID id) {
-        String strUrlLogin = strUrl+"specificUser";
-        URI url = null;
+        String strUrlLogin = strUrl+"specificuser";
+        URL url = null;
         try {
-            url = new URI(strUrlLogin);
-        } catch (URISyntaxException e) {
+            url = new URL(strUrlLogin+"?id="+id);
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        HttpForm form = new HttpForm(url);
-        form.putFieldValue("id",id.toString());
-        String data = getServerData(form);
+        String data = getServerData(url);
         JsonParser parser = new JsonParser();
         JsonObject account = parser.parse(data).getAsJsonObject();
         return account;
     }
+
 }
