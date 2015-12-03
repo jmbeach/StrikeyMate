@@ -23,6 +23,7 @@ import net.sf.corn.httpclient.HttpResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 import none.strikeymatetemp.R;
 
@@ -63,7 +64,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getlo)
+        // If user session already exists
+        if (loggedInUser() != null) {
+            // go straight to main activity
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         strUrlLogin = getResources().getString(R.string.backend_url) + "login";        setContentView(R.layout.activity_login);
 
@@ -291,9 +297,36 @@ public class LoginActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), text, duration);
         toast.show();
     }
-    private String loggedInUser() {
+    private UUID loggedInUser() {
         String prefName = getResources().getString(R.string.pref_logged_in_user);
         SharedPreferences pref = getApplicationContext().getSharedPreferences(prefName, 0);
-        return pref.getString(prefName,null);
+        String strPref = pref.getString(prefName,null);
+        // if the preference hasn't been set
+        if (strPref == null) {
+            // return null
+            return null;
+        }
+        // otherwise try to make an id with what is stored
+        UUID id;
+        try {
+            id = UUID.fromString(strPref);
+        } catch(Exception e) {
+            // if not successful return null
+            return null;
+        }
+        // otherwise return uuid
+        return id;
+    }
+    private static boolean isUuid(String uuid) {
+        try {
+            // if this does not throw exeption
+            UUID.fromString(uuid);
+            // then it is a UUID
+            return true;
+        }
+        catch(Exception e) {
+            // otherwise it is not a UUID
+            return false;
+        }
     }
 }
