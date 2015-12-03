@@ -27,7 +27,7 @@ public class UserAccount {
 
     //region PUBLIC_STATIC_METHODS
     public static UserAccount GetUserAccountByID(UUID id) {
-
+        throw new UnsupportedOperationException();
     }
     //endregion
 }
