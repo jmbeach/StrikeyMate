@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity
     }
     private GameSession activeSession;
     private ListView lvNavBar;
+    NavigationView navigationView;
+    DrawerLayout drawer;
     //endregion
 
     //region PUBLIC_METHODS
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //region DRAWER_SETUP
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -109,16 +112,42 @@ public class MainActivity extends AppCompatActivity
         String[] navBarListItems = getResources().getStringArray(R.array.nav_bar_list_items);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.drawer_list_item,navBarListItems);
         lvNavBar.setAdapter(adapter);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        lvNavBar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItemFromDrawer(position);
+            }
+        });
         //endregion
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
         //region SOCKET.IO_SETUP
 //        serverSocket.on(strEventOnFlagPlayerUpdate, onFlagPlayerUpdate);
 //        serverSocket.on(strEventOnScoreUpdate,onScoreUpdate);
 //        serverSocket.connect();
         //endregion
+    }
+
+    private void selectItemFromDrawer(int position) {
+        String [] navItems = getResources().getStringArray(R.array.nav_bar_list_items);
+        switch(position){
+            case 0:
+                System.out.println(navItems[position] + " was pressed in NavBar");
+//                Intent mainIntent = new Intent(MainActivity.this,MainActivity.class);
+//                startActivity(mainIntent);
+                drawer.closeDrawers();
+                break;
+            case 1:
+                System.out.println(navItems[position]+" was pressed in NavBar");
+                Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(loginIntent);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
