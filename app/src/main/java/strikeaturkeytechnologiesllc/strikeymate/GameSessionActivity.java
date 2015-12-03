@@ -47,7 +47,7 @@ public class GameSessionActivity extends AppCompatActivity
     ExpandableListView scoreView;
     ScoreAdapter scoreAdapter;
     String[] playerNames;
-    int frameNum = 0;
+    int frameNum = -1;
     int turn;
 
     @Override
@@ -61,11 +61,10 @@ public class GameSessionActivity extends AppCompatActivity
         scoreView = (ExpandableListView) findViewById(R.id.gameSessionView);
         playerNames = new String[]{"John","Alex","Susan"};
         scoresMap = new HashMap<Integer, List<String>>();
-        List<String> frame = new ArrayList<String>();
-        frame.add("John: "+8);
-        scoresMap.put(frameNum,frame);
-        scoreAdapter = new ScoreAdapter(this,scoresMap);
-        scoreView.setAdapter(scoreAdapter);
+        //List<String> frame = new ArrayList<String>();
+        //scoresMap.put(frameNum,frame);
+        //scoreAdapter = new ScoreAdapter(this,scoresMap);
+        //scoreView.setAdapter(scoreAdapter);
 
 
         //region DRAWER_SETUP
@@ -95,6 +94,9 @@ public class GameSessionActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
+                if (scoresMap.size()>=10 && turn==0){
+                    return;
+                }
                 int frameScore = 0;
                 int firstBowl = randObj.nextInt(11);
                 if(firstBowl == 10) {
@@ -107,13 +109,14 @@ public class GameSessionActivity extends AppCompatActivity
                     int secondBowl = randObj.nextInt(11-firstBowl);
                     if(firstBowl+secondBowl==10){
                         CharSequence text = "You got a spare!";
+                        //GET OTTA HERE
                         frameScore = 10;
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(getApplicationContext(),text,duration);
                         toast.show();
                     } else {
                         frameScore = firstBowl + secondBowl;
-                        CharSequence text = "You gscored "+frameScore;
+                        CharSequence text = "You scored "+frameScore;
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(getApplicationContext(),text,duration);
                         toast.show();
@@ -123,13 +126,14 @@ public class GameSessionActivity extends AppCompatActivity
                 if (turn == 0){
                     frameNum++;
                     List<String> frame = new ArrayList<String>();
-                    frame.add("John: "+frameScore);
+                    frame.add(playerNames[0]+": "+frameScore);
                     scoresMap.put(frameNum,frame);
-                } else if (turn == 1) {
-                    scoresMap.get(frameNum).add("Alex: "+frameScore);
-                } else if (turn == 2) {
-                    scoresMap.get(frameNum).add("Susan: "+frameScore);
+                } else {
+                    scoresMap.get(frameNum).add(playerNames[turn]+": "+frameScore);
                 }
+
+                if(turn<(playerNames.length-1)) turn++;
+                else turn = 0;
 
                 scoreAdapter = new ScoreAdapter(GameSessionActivity.this,scoresMap);
                 scoreView.setAdapter(scoreAdapter);
@@ -250,7 +254,7 @@ class ScoreAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String groupTitle =  "Frame "+Integer.toString(groupPosition+1);
+        String groupTitle =  "\t\t\t\t\tFrame "+Integer.toString(groupPosition+1);
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.gs_parent_layout, parent, false);
@@ -264,7 +268,7 @@ class ScoreAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String childTitle = (String) getChild(groupPosition,childPosition);
+        String childTitle = (String) "\t\t\t\t\t\t\t\t\t\t"+getChild(groupPosition,childPosition);
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.gs_child_layout,parent, false);
