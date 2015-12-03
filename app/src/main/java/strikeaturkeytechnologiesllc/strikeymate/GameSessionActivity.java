@@ -100,7 +100,7 @@ public class GameSessionActivity extends AppCompatActivity
                 int frameScore = 0;
                 int firstBowl = randObj.nextInt(11);
                 if(firstBowl == 10) {
-                    CharSequence text = "Strikey, mate!";
+                    CharSequence text = "Strikey, "+playerNames[turn]+"!";
                     frameScore = 10;
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(getApplicationContext(), text, duration);
@@ -108,7 +108,7 @@ public class GameSessionActivity extends AppCompatActivity
                 } else {
                     int secondBowl = randObj.nextInt(11-firstBowl);
                     if(firstBowl+secondBowl==10){
-                        CharSequence text = "You got a spare!";
+                        CharSequence text = playerNames[turn]+" got a spare!";
                         //GET OTTA HERE
                         frameScore = 10;
                         int duration = Toast.LENGTH_SHORT;
@@ -116,7 +116,7 @@ public class GameSessionActivity extends AppCompatActivity
                         toast.show();
                     } else {
                         frameScore = firstBowl + secondBowl;
-                        CharSequence text = "You scored "+frameScore;
+                        CharSequence text = playerNames[turn]+" scored "+frameScore;
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(getApplicationContext(),text,duration);
                         toast.show();
