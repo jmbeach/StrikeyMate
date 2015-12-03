@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -55,6 +56,19 @@ public class SpareTipActivity extends AppCompatActivity
             }
         });
 
+        Button getTipButton = (Button) findViewById(R.id.helpButton);
+        getTipButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                //get the current pin setup from the checkboxes
+                //pass those to the Leave class (or wherever it ends up) generateTip method
+                //      will that be server side?
+                //I need to figure out how to paint an arrow on the screen in response to the result
+
+            }
+        });
 
     }
 

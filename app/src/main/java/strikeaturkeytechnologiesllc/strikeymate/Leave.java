@@ -19,7 +19,7 @@ public class Leave {
      *
      * "sugg" == "suggestion"
      */
-    public void generateHelp() {
+    public void generateTip() {
 
         //      the pins
         //    6   7   8   9
