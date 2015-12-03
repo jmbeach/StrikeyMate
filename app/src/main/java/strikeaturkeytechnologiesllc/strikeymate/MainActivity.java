@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity
         lblUserName = (TextView)findViewById(R.id.lblMainUserName);
 
         // Check if user logged in
-        UUID loggedInUserId = LoginActivity.loggedInUser(getApplicationContext());
+        final UUID loggedInUserId = LoginActivity.loggedInUser(getApplicationContext());
         if (loggedInUserId != null) {
             // retrieve and store their account data
             loggedInUser = UserAccount.getUserAccountByID(loggedInUserId);
@@ -157,15 +157,25 @@ public class MainActivity extends AppCompatActivity
                 builder.setView(ll);
 
 // Set up the buttons
+                // User clicks "Affermative" make game button
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // get the number type
                         String text = input.getText().toString();
                         try {
                             int gameSize = Integer.parseInt(text);
                             if (gameSize > 0 && gameSize <= 8) {
                                 System.out.println("Game Size = " + gameSize);
                                 System.out.println("Flaggable Scores: " + checkBox.isChecked());
+                                // create a game session on the server
+                                GameSessionOptions options = new GameSessionOptions();
+                                options.managerId = loggedInUserId;
+                                options.allowFlagPlayers = checkBox.isChecked();
+                                options.gameSize = gameSize;
+                                GameSession createdSession = GameSession.create(options);
+                                // store the game session id in preferences
+                                storeGameSession(createdSession.gameId);
                                 Intent GSIntent = new Intent(MainActivity.this, GameSessionActivity.class);
                                 startActivity(GSIntent);
                             }
@@ -210,7 +220,11 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         gameID = input.getText().toString();
-                        System.out.println("Game Session ID = "+gameID);
+                        System.out.println("Game Session ID = " + gameID);
+                        GameSession session = GameSession.ByCode(gameID);
+                        storeGameSession(session.gameId);
+                        Intent GSIntent = new Intent(MainActivity.this, GameSessionActivity.class);
+                        startActivity(GSIntent);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -362,6 +376,15 @@ public class MainActivity extends AppCompatActivity
         String prefName = getResources().getString(R.string.pref_logged_in_user);
         SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
         pref.edit().remove(prefName).commit();
+    }
+
+    private void storeGameSession(int sessionId) {
+        String prefGroup = getResources().getString(R.string.pref_group_main);
+        String prefName = getResources().getString(R.string.pref_current_game_session);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(prefName, String.valueOf(sessionId));
+        editor.commit();
     }
 
     //endregion

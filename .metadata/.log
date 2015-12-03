@@ -542,3 +542,83 @@ Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
 
 !ENTRY org.eclipse.core.resources 2 10035 2015-12-03 02:15:19.207
 !MESSAGE The workspace will exit with unsaved changes in this session.
+
+!ENTRY com.google.gwt.eclipse.core 4 0 2015-12-03 09:10:22.820
+!MESSAGE Could not stop source viewer server.
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.initLogging(JettyServer.java:40)
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.<clinit>(JettyServer.java:30)
+	at com.google.gwt.eclipse.core.GWTPlugin.stop(GWTPlugin.java:147)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:827)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:820)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:955)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:323)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:144)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:159)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
+	at org.eclipse.core.internal.runtime.Log.<init>(Log.java:30)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getLog(InternalPlatform.java:351)
+	at org.eclipse.core.runtime.Platform.getLog(Platform.java:1017)
+	at com.google.gdt.eclipse.platform.jetty.JettyEclipseLogger.<clinit>(JettyEclipseLogger.java:35)
+	... 20 more
+
+!ENTRY org.eclipse.vjet.eclipse.ui 4 0 2015-12-03 09:10:27.840
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Unable to acquire the state change lock for the module: osgi.identity; osgi.identity="org.eclipse.vjet.eclipse.ui"; type="osgi.bundle"; version:Version="0.10.0.201303191704"; singleton:="true" [id=624] STOPPED [STARTED]
+	at org.eclipse.osgi.container.Module.lockStateChange(Module.java:329)
+	at org.eclipse.osgi.container.Module.stop(Module.java:480)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:144)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:159)
+	at java.lang.Thread.run(Thread.java:745)
+
+!ENTRY org.eclipse.vjet.eclipse.core 4 0 2015-12-03 09:10:33.365
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Unable to acquire the state change lock for the module: osgi.identity; osgi.identity="org.eclipse.vjet.eclipse.core"; type="osgi.bundle"; version:Version="0.10.0.201303191704"; singleton:="true" [id=614] STOPPED [STARTED]
+	at org.eclipse.osgi.container.Module.lockStateChange(Module.java:329)
+	at org.eclipse.osgi.container.Module.stop(Module.java:480)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:144)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:159)
+	at java.lang.Thread.run(Thread.java:745)
+
+!ENTRY org.eclipse.core.jobs 2 2 2015-12-03 09:10:34.760
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.ui.internal.Workbench$56
+
+!ENTRY org.eclipse.osgi 4 0 2015-12-03 09:10:39.811
+!MESSAGE Error stopping the framework.
+!STACK 0
+java.lang.IllegalStateException: Unable to lock module state.
+	at org.eclipse.osgi.container.ModuleContainer.unloadModules(ModuleContainer.java:1064)
+	at org.eclipse.osgi.container.ModuleContainer.close(ModuleContainer.java:1015)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:199)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:159)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.osgi.framework.BundleException: Unable to acquire the state change lock for the module: osgi.identity; osgi.identity="org.eclipse.vjet.eclipse.core"; type="osgi.bundle"; version:Version="0.10.0.201303191704"; singleton:="true" [id=614] UNINSTALLED [STARTED]
+	at org.eclipse.osgi.container.Module.lockStateChange(Module.java:329)
+	at org.eclipse.osgi.container.ModuleContainer.unloadModules(ModuleContainer.java:1062)
+	... 4 more

@@ -41,7 +41,6 @@ public class Server {
                 catch(HttpRequest.HttpRequestException e) {
                     e.printStackTrace();
                 }
-                System.out.println(data);
             }
         }
         RunnableGet task;
@@ -111,6 +110,24 @@ public class Server {
         return data;
     }
 
+    public static JsonObject postCreateGameSession(GameSessionOptions options) {
+        String strUrlCreateSession = strUrl+"creategame";
+        URI url = null;
+        try {
+            url = new URI(strUrlCreateSession);
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        HttpForm form = new HttpForm(url);
+        form.putFieldValue("managerId", String.valueOf(options.managerId));
+        form.putFieldValue("allowFlagging", String.valueOf(options.allowFlagPlayers));
+        String data = postServerData(form);
+        JsonParser parser = new JsonParser();
+        JsonObject session = parser.parse(data).getAsJsonObject();
+        return session;
+    }
+
     public static JsonObject getUserDataById(UUID id) {
         String strUrlLogin = strUrl+"specificuser";
         URL url = null;
@@ -125,4 +142,31 @@ public class Server {
         return account;
     }
 
+    public static JsonObject getGameSessionById(int id) {
+        String strUrlSession = strUrl + "session?id="+id;
+        URL url = null;
+        try {
+            url = new URL(strUrlSession);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        String data = getServerData(url);
+        JsonParser parser = new JsonParser();
+        JsonObject session = parser.parse(data).getAsJsonObject();
+        return session;
+    }
+
+    public static JsonObject getGameSessionByCode(String code) {
+        String strUrlSession = strUrl + "sessionfromcode?code="+code;
+        URL url = null;
+        try {
+            url = new URL(strUrlSession);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        String data = getServerData(url);
+        JsonParser parser = new JsonParser();
+        JsonObject session = parser.parse(data).getAsJsonObject();
+        return session;
+    }
 }
