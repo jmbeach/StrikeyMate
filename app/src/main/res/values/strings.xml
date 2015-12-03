@@ -14,7 +14,6 @@
     <string-array name="nav_bar_list_items">
         <item>Home</item>
         <item>Profile/Login</item>
-        <item>Settings</item>
     </string-array>
 
     <string name="title_activity_login">LoginActivity</string>
