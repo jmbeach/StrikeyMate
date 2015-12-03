@@ -56,12 +56,12 @@ public class SpareTipActivity extends AppCompatActivity
             }
         });
 
-        Button getTipButton = (Button) findViewById(R.id.getTipButton);
+        Button getTipButton = (Button) findViewById(R.id.helpButton);
         getTipButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                System.out.println("get tip...");
+
                 //get the current pin setup from the checkboxes
                 //pass those to the Leave class (or wherever it ends up) generateTip method
                 //      will that be server side?
