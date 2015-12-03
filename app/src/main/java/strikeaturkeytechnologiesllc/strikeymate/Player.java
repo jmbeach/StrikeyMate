@@ -10,7 +10,21 @@ public class Player {
     //region PUBLIC_ATTRIBUTES
     public ArrayList<Frame> frames;
     public UUID userId;
+    public String userName;
     //endregion
+
+    public Player(UserAccount account){
+        userName = account.username;
+        userId = account.userId;
+    }
+    public Player(String name){
+        userName = name;
+    }
+
+    public String getUserName(){
+        return userName;
+    }
+
 
     //region PUBLIC_METHODS
     /**
@@ -28,8 +42,9 @@ public class Player {
      *                    frame to get the player's score for.
      * @return An int representing the player's score
      */
-    public int score(int frameNumber) {
-        throw new UnsupportedOperationException();
+    public int score(int frameNumber)
+    {
+        return frames.get(frameNumber).score();
     }
 
     /**

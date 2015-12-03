@@ -62,6 +62,7 @@ public class GameSessionActivity extends AppCompatActivity
         // get current game session
         currentSession = currentGameSession();
         System.out.println(currentSession.gameCode);
+
         turn = 0;
         scoreView = (ExpandableListView) findViewById(R.id.gameSessionView);
         playerNames = new String[]{"John","Alex","Susan"};
