@@ -10,4 +10,31 @@
     tools:showIn="@layout/activity_game_session"
     tools:context="strikeaturkeytechnologiesllc.strikeymate.GameSessionActivity">
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Request Help"
+        android:id="@+id/helpButton"
+        android:layout_marginBottom="117dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Another Button"
+        android:id="@+id/anotherButton"
+        android:layout_below="@+id/gameSessionView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ExpandableListView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/gameSessionView"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/helpButton" />
+
 </RelativeLayout>
