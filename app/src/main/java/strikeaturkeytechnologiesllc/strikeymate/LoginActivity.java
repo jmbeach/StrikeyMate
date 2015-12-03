@@ -285,9 +285,11 @@ public class LoginActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // if login successful
-        if (task.data.equals(getResources().getString(R.string.server_message_success))) {
+        // if server returns a UUID
+        if (isUuid(task.data)){
+            // then the operation was successful
             // Save the id of the logged in user
+            setLoggedInUser(task.data);
             // redirect user to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -299,8 +301,9 @@ public class LoginActivity extends AppCompatActivity {
         toast.show();
     }
     private UUID loggedInUser() {
+        String prefGroup = getResources().getString(R.string.pref_group_main);
         String prefName = getResources().getString(R.string.pref_logged_in_user);
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefName, 0);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup, 0);
         String strPref = pref.getString(prefName,null);
         // if the preference hasn't been set
         if (strPref == null) {
@@ -317,6 +320,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         // otherwise return uuid
         return id;
+    }
+    private void setLoggedInUser(String id) {
+        String prefGroup = getResources().getString(R.string.pref_group_main);
+        String prefName = getResources().getString(R.string.pref_logged_in_user);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(prefName,id);
     }
     private static boolean isUuid(String uuid) {
         try {
