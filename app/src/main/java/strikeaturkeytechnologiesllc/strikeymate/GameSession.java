@@ -60,6 +60,13 @@ public class GameSession {
         return session;
     }
 
+    public static GameSession ByCode(String gameCode) {
+        JsonObject jsonData = Server.getGameSessionByCode(gameCode);
+        GameSession session = new GameSession();
+        assignToGameSessionFromJson(session,jsonData);
+        return session;
+    }
+
     //endregion
 
     //region PRIVATE_METHODS

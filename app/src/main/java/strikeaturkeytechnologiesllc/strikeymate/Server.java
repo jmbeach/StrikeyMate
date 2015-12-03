@@ -41,7 +41,6 @@ public class Server {
                 catch(HttpRequest.HttpRequestException e) {
                     e.printStackTrace();
                 }
-                System.out.println(data);
             }
         }
         RunnableGet task;
@@ -157,5 +156,17 @@ public class Server {
         return session;
     }
 
-
+    public static JsonObject getGameSessionByCode(String code) {
+        String strUrlSession = strUrl + "sessionfromcode?code="+code;
+        URL url = null;
+        try {
+            url = new URL(strUrlSession);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        String data = getServerData(url);
+        JsonParser parser = new JsonParser();
+        JsonObject session = parser.parse(data).getAsJsonObject();
+        return session;
+    }
 }

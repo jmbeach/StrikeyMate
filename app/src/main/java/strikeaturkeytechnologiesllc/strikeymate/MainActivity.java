@@ -220,7 +220,11 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         gameID = input.getText().toString();
-                        System.out.println("Game Session ID = "+gameID);
+                        System.out.println("Game Session ID = " + gameID);
+                        GameSession session = GameSession.ByCode(gameID);
+                        storeGameSession(session.gameId);
+                        Intent GSIntent = new Intent(MainActivity.this, GameSessionActivity.class);
+                        startActivity(GSIntent);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
