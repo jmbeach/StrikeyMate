@@ -3,6 +3,7 @@ package strikeaturkeytechnologiesllc.strikeymate;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getlo)
 
         strUrlLogin = getResources().getString(R.string.backend_url) + "login";        setContentView(R.layout.activity_login);
 
@@ -239,7 +242,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         HttpForm form = new HttpForm(url);
         form.putFieldValue("identity",username);
-        form.putFieldValue("pass",pass);
+        form.putFieldValue("pass", pass);
         class RunnableLogin implements Runnable {
             HttpForm form;
             Context context;
@@ -256,8 +259,11 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (res.hasError()) {
-                    //TODO:handle error
+                // if the result is still null
+                if (res == null) {
+                    // couldn't communicate with server
+                    data = "Couldn't communicate with server.";
+                    return;
                 }
                 String data = res.getData();
                 System.out.println(data);
@@ -273,9 +279,21 @@ public class LoginActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        // if login successful
+        if (task.data.equals(getResources().getString(R.string.server_message_success))) {
+            // redirect user to main activity
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            return;
+        }
         CharSequence text = task.data;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getApplicationContext(), text, duration);
         toast.show();
+    }
+    private String loggedInUser() {
+        String prefName = getResources().getString(R.string.pref_logged_in_user);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefName, 0);
+        return pref.getString(prefName,null);
     }
 }

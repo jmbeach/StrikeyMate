@@ -2,6 +2,8 @@ package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -226,8 +228,11 @@ public class RegisterActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (res.hasError()) {
-                    //TODO:handle error
+                // if the result is still null
+                if (res == null) {
+                    // something went wrong with communication
+                    data = "something went wrong while communicating with server";
+                    return;
                 }
                 String data = res.getData();
                 this.data = data;
@@ -241,11 +246,17 @@ public class RegisterActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        // if the operation completed successfully
+        if (task.data.equals(getResources().getString(R.string.server_message_success))) {
+            // Take the user back to the login screen to login
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
         CharSequence text = task.data;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getApplicationContext(), text, duration);
         toast.show();
 
-
     }
+
 }
