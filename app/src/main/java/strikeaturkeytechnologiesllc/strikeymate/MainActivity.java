@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity
     }
     private GameSession activeSession;
     private ListView lvNavBar;
+    NavigationView navigationView;
+    DrawerLayout drawer;
     //endregion
 
     //region PUBLIC_METHODS
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //region DRAWER_SETUP
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -110,6 +112,8 @@ public class MainActivity extends AppCompatActivity
         String[] navBarListItems = getResources().getStringArray(R.array.nav_bar_list_items);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.drawer_list_item,navBarListItems);
         lvNavBar.setAdapter(adapter);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         lvNavBar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,8 +122,7 @@ public class MainActivity extends AppCompatActivity
         });
         //endregion
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
         //region SOCKET.IO_SETUP
 //        serverSocket.on(strEventOnFlagPlayerUpdate, onFlagPlayerUpdate);
@@ -132,9 +135,10 @@ public class MainActivity extends AppCompatActivity
         String [] navItems = getResources().getStringArray(R.array.nav_bar_list_items);
         switch(position){
             case 0:
-                System.out.println(navItems[position]+" was pressed in NavBar");
-                Intent mainIntent = new Intent(MainActivity.this,MainActivity.class);
-                startActivity(mainIntent);
+                System.out.println(navItems[position] + " was pressed in NavBar");
+//                Intent mainIntent = new Intent(MainActivity.this,MainActivity.class);
+//                startActivity(mainIntent);
+                drawer.closeDrawers();
                 break;
             case 1:
                 System.out.println(navItems[position]+" was pressed in NavBar");
