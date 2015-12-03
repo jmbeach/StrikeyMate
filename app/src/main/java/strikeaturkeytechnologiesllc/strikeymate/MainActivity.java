@@ -1,6 +1,8 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
+import android.app.AlertDialog;
 import android.app.LauncherActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.InputType;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private static final String strEventOnFlagPlayerUpdate = "flag-player-update";
     private static final String strEventOnScoreUpdate = "on-score-update";
     //endregion
+
+    private String gameID = "";
 
     //region PUBLIC_ATTRIBUTES
     //endregion
@@ -105,8 +111,42 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                Intent gameSessionIntent = new Intent(MainActivity.this,GameSessionActivity.class);
+                Intent gameSessionIntent = new Intent(MainActivity.this, GameSessionActivity.class);
                 startActivity(gameSessionIntent);
+            }
+        });
+
+        Button joinGame = (Button) findViewById(R.id.btnJoinGame);
+        joinGame.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //pop up text field
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Enter Unique Game Session ID");
+
+// Set up the input
+                final EditText input = new EditText(MainActivity.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        gameID = input.getText().toString();
+                        System.out.println("Game Session ID = "+gameID);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
