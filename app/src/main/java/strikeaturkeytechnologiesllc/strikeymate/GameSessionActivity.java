@@ -121,11 +121,7 @@ public class GameSessionActivity extends AppCompatActivity
                         toast.show();
                     } else {
                         frameScore = firstBowl + secondBowl;
-<<<<<<< HEAD
-                        CharSequence text = "You scored "+frameScore;
-=======
                         CharSequence text = playerNames[turn]+" scored "+frameScore;
->>>>>>> 6256ffbc4084ed60421f5b5c1e02d434f53e0860
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(getApplicationContext(),text,duration);
                         toast.show();
