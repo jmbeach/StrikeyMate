@@ -1,7 +1,6 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
@@ -14,15 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import net.sf.corn.httpclient.HttpForm;
-import net.sf.corn.httpclient.HttpResponse;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.UUID;
 
 import none.strikeymatetemp.R;
@@ -240,62 +232,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestLogin(String username, String pass) {
-        URI url = null;
-        try {
-            url = new URI(strUrlLogin);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        HttpForm form = new HttpForm(url);
-        form.putFieldValue("identity",username);
-        form.putFieldValue("pass", pass);
-        class RunnableLogin implements Runnable {
-            HttpForm form;
-            Context context;
-            String data;
-            public RunnableLogin(HttpForm _form, Context c) {
-                form = _form;
-                context = c;
-            }
-            @Override
-            public void run() {
-                HttpResponse res = null;
-                try {
-                    res = form.doPost();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // if the result is still null
-                if (res == null) {
-                    // couldn't communicate with server
-                    data = "Couldn't communicate with server.";
-                    return;
-                }
-                String data = res.getData();
-                System.out.println(data);
-                this.data = data;
-            }
-        }
-        RunnableLogin task;
-        task = new RunnableLogin(form,getApplicationContext());
-        Thread t = new Thread(task);
-        t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        String data = Server.requestLogin(username, pass);
         // if server returns a UUID
-        if (isUuid(task.data)){
+        if (isUuid(data)){
             // then the operation was successful
             // Save the id of the logged in user
-            setLoggedInUser(task.data);
+            setLoggedInUser(data);
             // redirect user to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             return;
         }
-        CharSequence text = task.data;
+        CharSequence text = data;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getApplicationContext(), text, duration);
         toast.show();

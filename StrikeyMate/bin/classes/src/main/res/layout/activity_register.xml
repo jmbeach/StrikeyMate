@@ -1,0 +1,159 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="strikeaturkeytechnologiesllc.strikeymate.RegisterActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <RelativeLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="top"
+        android:keepScreenOn="true">
+        <RelativeLayout
+            android:id="@+id/divRegisterHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblRegisterHeaderAppPrefix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name_prefix"
+                style="@style/TitleTextAccent"
+                />
+            <TextView
+                android:id="@+id/lblRegisterHeaderAppSuffix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:layout_toRightOf="@id/lblRegisterHeaderAppPrefix"
+                android:text="@string/app_name_suffix"
+                style="@style/TitleText"
+                />
+            <TextView
+                android:layout_toRightOf="@id/lblRegisterHeaderAppSuffix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="!"
+                style="@style/TitleText"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/divRegisterHeader"
+            android:id="@+id/divSubHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="We're glad you're registering!"
+                style="@style/Text.H3"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/divRegisterPrompt"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/divSubHeader"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                style="@style/Text.H3"
+                android:text="Tell us about yourself:"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/divRegisterInput"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/divRegisterPrompt"
+            >
+            <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+            <LinearLayout
+                android:focusable="true" android:focusableInTouchMode="true"
+                android:layout_width="0px" android:layout_height="0px"/>
+            <EditText
+                android:id="@+id/tbRegisterEmail"
+                android:layout_width="@dimen/editTextLarge"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:hint="email..."
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/tbRegisterUsername"
+                android:theme="@style/EditText"
+                />
+            <EditText
+                android:id="@+id/tbRegisterUsername"
+                android:layout_below="@+id/tbRegisterEmail"
+                android:layout_width="@dimen/editTextLarge"
+                android:layout_height="wrap_content"
+                android:hint="username..."
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/tbRegisterPassword"
+                android:theme="@style/EditText"
+                />
+            <EditText
+                android:id="@+id/tbRegisterPassword"
+                android:layout_width="@dimen/editTextLarge"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tbRegisterUsername"
+                android:theme="@style/EditText"
+                android:password="true"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:hint="password..."
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/divRegisterSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/divRegisterInput"
+            >
+            <Button
+                android:id="@+id/btnRegisterSubmit"
+                android:layout_width="200dp"
+                android:layout_marginTop="50dp"
+                android:layout_height="wrap_content"
+                style="@style/Btn"
+                android:text="Register"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

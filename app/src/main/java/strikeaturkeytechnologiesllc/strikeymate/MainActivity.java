@@ -2,6 +2,7 @@ package strikeaturkeytechnologiesllc.strikeymate;
 
 import android.app.LauncherActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                Intent gameSessionIntent = new Intent(MainActivity.this,GameSessionActivity.class);
+                Intent gameSessionIntent = new Intent(MainActivity.this, GameSessionActivity.class);
                 startActivity(gameSessionIntent);
             }
         });
@@ -157,7 +158,12 @@ public class MainActivity extends AppCompatActivity
                 //startActivity(loginIntent);
                 break;
             case 2:
+                // logout
                 System.out.println(navItems[position]+" was pressed in NavBar");
+                String prefGroup = getResources().getString(R.string.pref_group_main);
+                String prefName = getResources().getString(R.string.pref_logged_in_user);
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(prefGroup,0);
+                pref.edit().remove(prefName).commit();
                 Intent logoutIntent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(logoutIntent);
                 break;

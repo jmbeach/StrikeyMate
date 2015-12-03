@@ -1,0 +1,4 @@
+INDEX VERSION 1.127+/Users/jbeach/AndroidStudioProjects/StrikeyMate/.metadata/.plugins/org.eclipse.jdt.core
+3171139864.index
+677361136.index
+1842692216.index

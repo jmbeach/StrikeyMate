@@ -1,5 +1,8 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -8,7 +11,13 @@ import java.util.UUID;
  * Created by jbeach on 10/27/15.
  */
 public class UserAccount {
+    @SerializedName("id")
     public UUID userId;
+    public String email;
+    public String firstName;
+    public String lastName;
+    public Timestamp joinDate;
+    public String username;
 
     //region PUBLIC_METHODS
     public void updateAccount() {

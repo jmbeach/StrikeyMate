@@ -1,0 +1,146 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fullscreen_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="strikeaturkeytechnologiesllc.strikeymate.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/divLoginMain"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/divLoginGreet"
+            style="@style/Div"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp">
+
+            <TextView
+                android:id="@+id/lblLoginGreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello! Want to "
+                android:textAppearance="@style/Text.H2" />
+
+            <TextView
+                android:id="@+id/lblLoginQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblLoginGreet"
+                android:text="login"
+                android:textAppearance="@style/Text.H2.Secondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lblLoginQuestion"
+                android:text="\?"
+                android:textAppearance="@style/Text.H2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/divLoginInput"
+            android:layout_below="@id/divLoginGreet"
+            android:layout_width="fill_parent"
+            style="@style/Div"
+            >
+            <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+            <LinearLayout
+                android:focusable="true" android:focusableInTouchMode="true"
+                android:layout_width="0px" android:layout_height="0px"/>
+            <EditText
+                android:id="@+id/tbLoginUsername"
+                android:layout_width="@dimen/editTextLarge"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:hint="username..."
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/tbLoginPassword"
+                android:theme="@style/EditText"
+                />
+            <EditText
+                android:id="@+id/tbLoginPassword"
+                android:layout_width="@dimen/editTextLarge"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tbLoginUsername"
+                android:layout_centerHorizontal="true"
+                android:theme="@style/EditText"
+                android:password="true"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:hint="password..."
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/divBtnLogin"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/divLoginInput"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:width="260dp"
+                android:layout_marginTop="70dp"
+                style="@style/Btn"
+                android:text="Login"
+                android:id="@+id/btnLogin"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/divBtnLogin"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+                >
+
+            <TextView
+                android:id="@+id/lblRegisterPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Not a member?"
+                style="@style/Text"
+                />
+            <Button
+                android:layout_toRightOf="@id/lblRegisterPrompt"
+                android:id="@+id/btnRegister"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:textSize="@dimen/p_size"
+                android:text="@string/strRegister"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@null"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:textColor="@color/colorAccent"
+                android:textAllCaps="false"
+                />
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btnLoginSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skip >>"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+    <LinearLayout android:id="@+id/fullscreen_content_controls" style="?metaButtonBarStyle"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/black_overlay" android:orientation="horizontal"
+        tools:ignore="UselessParent">
+    </LinearLayout>
+
+</FrameLayout>
+
