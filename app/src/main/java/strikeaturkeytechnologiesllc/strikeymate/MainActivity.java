@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //pop up text field
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_HOLO_LIGHT);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Enter Game Size");
 
 // Set up the input
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 //builder.setView(input);
                 LinearLayout ll=new LinearLayout(MainActivity.this);
+                ll.removeAllViews();
                 ll.setOrientation(LinearLayout.VERTICAL);
                 ll.addView(input);
                 ll.addView(checkBoxView);
@@ -152,16 +153,23 @@ public class MainActivity extends AppCompatActivity
                             if (gameSize>0 && gameSize <=8 ) {
                                 System.out.println("Game Size = " + gameSize);
                                 System.out.println("Flaggable Scores: " + checkBox.isChecked());
+                                Intent GSIntent = new Intent(MainActivity.this,GameSessionActivity.class);
+                                startActivity(GSIntent);
                             }
                         } catch (NumberFormatException e){
                             System.out.println(text+" is not a number");
+                            Intent MainIntent = new Intent(MainActivity.this,MainActivity.class);
+                            startActivity(MainIntent);
                         }
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+                        Intent MainIntent = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(MainIntent);
                     }
                 });
 
