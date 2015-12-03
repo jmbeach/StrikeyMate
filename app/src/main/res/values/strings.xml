@@ -15,6 +15,14 @@
     <string-array name="nav_bar_list_items">
         <item>Home</item>
         <item>Profile/Login</item>
+        <item>Logout</item>
+    </string-array>
+
+    <string-array name="game_nav_items">
+        <item>Score</item>
+        <item>Tips</item>
+        <item>Leave Game</item>
+        <item>Settings</item>
     </string-array>
 
     <string name="title_activity_login">LoginActivity</string>
@@ -86,4 +94,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_settings1">Settings</string>
     <string name="title_activity_game_session">GameSessionActivity</string>
+    <string name="title_activity_spare_tip">SpareTipActivity</string>
 </resources>

@@ -38,7 +38,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnJoinGame"
         style="@style/Btn.Big.Accent"
         android:text="Join a Game"
         android:layout_marginTop="170dp"
@@ -47,7 +47,7 @@
 
     <RelativeLayout
         android:id="@+id/divLblHint"
-        android:layout_below="@id/button"
+        android:layout_below="@id/btnJoinGame"
         android:paddingBottom="2dp"
         android:paddingTop="15dp"
         style="@style/Div"
@@ -61,6 +61,7 @@
             />
     </RelativeLayout>
     <Button
+        android:id="@+id/btnCreateGame"
         style="@style/Btn.Big"
         android:layout_below="@id/divLblHint"
         android:text="Create a Game"

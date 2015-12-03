@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/csdrawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_spare_tip"
+        tools:context="strikeaturkeytechnologiesllc.strikeymate.SpareTipActivity">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:id="@+id/radioButton"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/radioButton5"
+            android:layout_toEndOf="@+id/radioButton5"
+            android:layout_marginTop="40dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:id="@+id/radioButton2"
+            android:layout_alignTop="@+id/radioButton"
+            android:layout_toLeftOf="@+id/radioButton5"
+            android:layout_toStartOf="@+id/radioButton5" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:id="@+id/radioButton3"
+            android:layout_alignTop="@+id/radioButton2"
+            android:layout_toLeftOf="@+id/radioButton6"
+            android:layout_toStartOf="@+id/radioButton6" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:id="@+id/radioButton4"
+            android:layout_alignTop="@+id/radioButton3"
+            android:layout_toLeftOf="@+id/radioButton7"
+            android:layout_toStartOf="@+id/radioButton7" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:id="@+id/radioButton5"
+            android:layout_above="@+id/radioButton8"
+            android:layout_toRightOf="@+id/radioButton8"
+            android:layout_toEndOf="@+id/radioButton8" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:id="@+id/radioButton6"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/radioButton3"
+            android:layout_toRightOf="@+id/radioButton9"
+            android:layout_toEndOf="@+id/radioButton9" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:id="@+id/radioButton7"
+            android:layout_alignTop="@+id/radioButton6"
+            android:layout_toLeftOf="@+id/radioButton9"
+            android:layout_toStartOf="@+id/radioButton9" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:id="@+id/radioButton8"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/radioButton6"
+            android:layout_toRightOf="@+id/radioButton6"
+            android:layout_toEndOf="@+id/radioButton6" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:id="@+id/radioButton9"
+            android:layout_alignTop="@+id/radioButton8"
+            android:layout_toLeftOf="@+id/radioButton10"
+            android:layout_toStartOf="@+id/radioButton10" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/radioButton10"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/radioButton8"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/csnav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main">
+
+        <ListView
+            android:id="@+id/csNavBar"
+            android:layout_width="match_parent"
+            android:layout_marginTop="160dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#fff"
+            android:choiceMode="singleChoice"
+            android:divider="@color/offBlack"
+            android:dividerHeight="0dp" />
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

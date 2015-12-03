@@ -18,8 +18,9 @@ import android.widget.ListView;
 
 import none.strikeymatetemp.R;
 
-public class GameSessionActivity extends AppCompatActivity
-             implements NavigationView.OnNavigationItemSelectedListener{
+public class SpareTipActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
+
 
     private ListView lvNavBar;
     NavigationView navigationView;
@@ -28,23 +29,22 @@ public class GameSessionActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_session);
+        setContentView(R.layout.activity_spare_tip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //region DRAWER_SETUP
-        drawer = (DrawerLayout) findViewById(R.id.gsdrawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.csdrawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
 
-        lvNavBar = (ListView)findViewById(R.id.gsNavBar);
+        lvNavBar = (ListView)findViewById(R.id.csNavBar);
         String[] navBarListItems = getResources().getStringArray(R.array.game_nav_items);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.drawer_list_item,navBarListItems);
         lvNavBar.setAdapter(adapter);
-        navigationView = (NavigationView) findViewById(R.id.gsnav_view);
+        navigationView = (NavigationView) findViewById(R.id.csnav_view);
         navigationView.setNavigationItemSelectedListener(this);
         lvNavBar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,24 +63,23 @@ public class GameSessionActivity extends AppCompatActivity
         });
     }
 
+
     private void selectItemFromDrawer(int position) {
         String [] navItems = getResources().getStringArray(R.array.game_nav_items);
         switch(position){
             case 0:
                 System.out.println(navItems[position] + " was pressed in NavBar. Closing Drawers");
-//                Intent mainIntent = new Intent(MainActivity.this,MainActivity.class);
-//                startActivity(mainIntent);
-                drawer.closeDrawers();
+                Intent mainIntent = new Intent(SpareTipActivity.this,GameSessionActivity.class);
+                startActivity(mainIntent);
                 break;
             case 1:
                 System.out.println(navItems[position] + " was pressed in NavBar");
-                Intent tipIntent = new Intent(GameSessionActivity.this,SpareTipActivity.class);
-                startActivity(tipIntent);
+                drawer.closeDrawers();
                 break;
             case 2:
                 System.out.println(navItems[position] + " was pressed in NavBar. Heading home.");
-                Intent mainIntent = new Intent(GameSessionActivity.this,MainActivity.class);
-                startActivity(mainIntent);
+                Intent tipIntent = new Intent(SpareTipActivity.this,MainActivity.class);
+                startActivity(tipIntent);
                 break;
             case 3:
                 System.out.println(navItems[position] + " was pressed in NavBar");
@@ -96,7 +95,7 @@ public class GameSessionActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.gsdrawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.csdrawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
