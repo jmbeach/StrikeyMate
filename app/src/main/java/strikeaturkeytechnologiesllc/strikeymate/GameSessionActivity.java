@@ -1,6 +1,8 @@
 package strikeaturkeytechnologiesllc.strikeymate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,28 +12,43 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import none.strikeymatetemp.R;
 
+
 public class GameSessionActivity extends AppCompatActivity
-             implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private ListView lvNavBar;
     NavigationView navigationView;
     DrawerLayout drawer;
-    int randNum;
     Random randObj = new Random();
+
+    HashMap<Integer,List<String>> scoresMap;
+    List<String>scoreList;
+    ExpandableListView scoreView;
+    ScoreAdapter scoreAdapter;
+    String[] playerNames;
+    int frameNum = 0;
+    int turn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +56,17 @@ public class GameSessionActivity extends AppCompatActivity
         setContentView(R.layout.activity_game_session);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        turn = 0;
+        scoreView = (ExpandableListView) findViewById(R.id.gameSessionView);
+        playerNames = new String[]{"John","Alex","Susan"};
+        scoresMap = new HashMap<Integer, List<String>>();
+        List<String> frame = new ArrayList<String>();
+        frame.add("John: "+8);
+        scoresMap.put(frameNum,frame);
+        scoreAdapter = new ScoreAdapter(this,scoresMap);
+        scoreView.setAdapter(scoreAdapter);
+
 
         //region DRAWER_SETUP
         drawer = (DrawerLayout) findViewById(R.id.gsdrawer_layout);
@@ -67,11 +95,48 @@ public class GameSessionActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                randNum = randObj.nextInt(10);
+                int frameScore = 0;
+                int firstBowl = randObj.nextInt(11);
+                if(firstBowl == 10) {
+                    CharSequence text = "Strikey, mate!";
+                    frameScore = 10;
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                    toast.show();
+                } else {
+                    int secondBowl = randObj.nextInt(11-firstBowl);
+                    if(firstBowl+secondBowl==10){
+                        CharSequence text = "You got a spare!";
+                        frameScore = 10;
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(getApplicationContext(),text,duration);
+                        toast.show();
+                    } else {
+                        frameScore = firstBowl + secondBowl;
+                        CharSequence text = "You gscored "+frameScore;
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(getApplicationContext(),text,duration);
+                        toast.show();
+                    }
+                }
 
-                //TODO: Everything having to do with Game sessions. RIP Jared's brain
+                if (turn == 0){
+                    frameNum++;
+                    List<String> frame = new ArrayList<String>();
+                    frame.add("John: "+frameScore);
+                    scoresMap.put(frameNum,frame);
+                } else if (turn == 1) {
+                    scoresMap.get(frameNum).add("Alex: "+frameScore);
+                } else if (turn == 2) {
+                    scoresMap.get(frameNum).add("Susan: "+frameScore);
+                }
+
+                scoreAdapter = new ScoreAdapter(GameSessionActivity.this,scoresMap);
+                scoreView.setAdapter(scoreAdapter);
+                System.out.println(scoresMap.toString());
             }
         });
+
 
         Button reqHelpButton = (Button) findViewById(R.id.helpButton);
         reqHelpButton.setOnClickListener(new View.OnClickListener() {
@@ -134,5 +199,83 @@ public class GameSessionActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.gsdrawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+}
+
+
+class ScoreAdapter extends BaseExpandableListAdapter {
+
+    Context ctx;
+    HashMap<Integer, List<String>> scores;
+
+    public ScoreAdapter(Context ct, HashMap<Integer, List<String>> map) {
+        ctx = ct;
+        scores = map;
+    }
+
+    @Override
+    public int getGroupCount() {
+        return scores.size();
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return scores.get(groupPosition).size();
+    }
+
+    @Override
+    public Object getGroup(int groupPosition) {
+        return scores.get(groupPosition);
+    }
+
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return scores.get(groupPosition).get(childPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        String groupTitle =  "Frame "+Integer.toString(groupPosition+1);
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.gs_parent_layout, parent, false);
+
+        }
+        TextView parentTextView = (TextView) convertView.findViewById(R.id.parent_txt);
+        parentTextView.setTypeface(null, Typeface.BOLD);
+        parentTextView.setText(groupTitle);
+        return convertView;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        String childTitle = (String) getChild(groupPosition,childPosition);
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.gs_child_layout,parent, false);
+        }
+        TextView childTextView = (TextView) convertView.findViewById(R.id.child_txt);
+        childTextView.setText(childTitle);
+        return convertView;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return false;
     }
 }
