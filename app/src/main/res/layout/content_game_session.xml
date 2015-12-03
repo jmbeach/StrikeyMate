@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Request Help"
         android:id="@+id/helpButton"
-        android:layout_marginBottom="117dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/simScoreButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -25,14 +24,17 @@
         android:layout_height="wrap_content"
         android:text="Simulate score"
         android:id="@+id/simScoreButton"
-        android:layout_below="@+id/gameSessionView"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="46dp" />
 
     <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:id="@+id/gameSessionView"
+        android:divider="#FFFF00"
+        android:dividerHeight = "0.5dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/helpButton" />
